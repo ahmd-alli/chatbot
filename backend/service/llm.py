@@ -1,13 +1,6 @@
-from transformers import pipeline
+import os
+from langchain_openai import ChatOpenAI
 
 class LLM:
-    def ask(question:str, context:str, additional_prompt=""):
-        # Create a pipeline.
-        p = pipeline("question-answering", model="sentence-transformers/all-MiniLM-L6-v2")
-        
-        result = p({
-            "question": additional_prompt + question,
-            "context": context
-        })
-        
-        return result
+  def get(model = "gpt-4o"):
+    return ChatOpenAI(model=model, openai_api_key = os.getenv("OPENAI_API_KEY"))

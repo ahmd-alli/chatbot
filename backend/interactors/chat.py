@@ -5,7 +5,6 @@ from backend.service.pinecone import PineconeDB
 from backend.utils.huggingface import Embedder as Huggingface_Embedder
 from backend.utils.openai import Embedder as Openai_Embedder
 
-
 def call(question :str):
     # Get embedder.
     embedder = Openai_Embedder.get()
@@ -18,5 +17,14 @@ def call(question :str):
     # Convert documents list to text.
     txt = String.document_to_str(matching_chunks)
     
+    # Prepare prompt.
+    prompt = """The document text below is taken from a person's resume. Please read it carefully and answer the below question. Please don't give an answer outside of this document text. also, format the answer if required.
+
+        Document Text: {txt}
+        Question: {question}
+    """.format(txt=txt, question=question)
+    
     # Ask LLM.
-    return LLM.ask(question=question, context=txt, additional_prompt="")
+    llm = LLM.get()
+    return llm.invoke(prompt).content 
+    
