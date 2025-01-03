@@ -1,0 +1,11 @@
+fastapi
+python-dotenv
+python-multipart
+uvicorn
+PyPDF2
+pinecone
+transformers
+huggingface_hub
+langchain
+langchain_pinecone
+langchain_huggingface
