@@ -7,5 +7,7 @@ pinecone
 transformers
 huggingface_hub
 langchain
+langchain_openai
 langchain_pinecone
+langchain_community
 langchain_huggingface

@@ -3,11 +3,12 @@ from backend.utils.str import String
 from backend.service.llm import LLM
 from backend.service.pinecone import PineconeDB
 from backend.utils.huggingface import Embedder as Huggingface_Embedder
+from backend.utils.openai import Embedder as Openai_Embedder
 
 
 def call(question :str):
     # Get embedder.
-    embedder = Huggingface_Embedder.get(os.getenv("HUGGING_FACE_MODEL_NAME"))
+    embedder = Openai_Embedder.get()
     
     filename = os.getenv("KNOWLEDGE_FILE_NAME")
     

@@ -12,7 +12,7 @@ class PineconeDB:
             embedding = embeddings,
             namespace = uniq_id,
             metadatas = [{'id': f"Section {i+1}"} for i in range(len(text_chunks))],
-            index_name = [os.getenv("PINECONE_INDEX_NAME")]
+            index_name = os.getenv("PINECONE_INDEX_NAME")
         )
         return uniq_id
 
@@ -31,7 +31,7 @@ class PineconeDB:
         )
         retriever = vector_store.as_retriever(
             search_type="similarity_score_threshold",
-            search_kwargs={'score_threshold': 0.7}
+            search_kwargs={'score_threshold': 0.4}
         )
 
         # Retrieve matching chunks.

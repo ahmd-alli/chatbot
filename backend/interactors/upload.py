@@ -2,7 +2,7 @@ import os
 from backend.service.pinecone import PineconeDB
 from backend.utils.file import File
 from backend.utils.splitter import Splitter
-from backend.utils.huggingface import Embedder as Huggingface_Embedder
+from backend.utils.openai import Embedder as openai_embedder
 
 def call(file: bytes, filename: str):
     # Get text from file.
@@ -12,7 +12,7 @@ def call(file: bytes, filename: str):
     text_chunks = Splitter.get_text_chunks(text=txt)
     
     # Get embedder.
-    embedder = Huggingface_Embedder.get(os.getenv("HUGGING_FACE_MODEL_NAME"))
+    embedder = openai_embedder.get()
     
     # Store chunks in vector db.
     return PineconeDB.store(
