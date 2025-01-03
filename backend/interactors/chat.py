@@ -2,7 +2,6 @@ import os
 from backend.utils.str import String
 from backend.service.llm import LLM
 from backend.service.pinecone import PineconeDB
-from backend.utils.huggingface import Embedder as Huggingface_Embedder
 from backend.utils.openai import Embedder as Openai_Embedder
 
 def call(question :str):
