@@ -1,11 +1,11 @@
 import os
-from langchain.prompts import ChatPromptTemplate
-from langchain.schema.output_parser import StrOutputParser
+from langfuse.decorators import observe
 from backend.utils.str import String
 from backend.service.google import LLM
 from backend.service.pinecone import PineconeDB
 from backend.utils.openai import Embedder as Openai_Embedder
 
+@observe()
 def call(question: str) -> str:
     # Get embedder.
     embedder = Openai_Embedder.get()

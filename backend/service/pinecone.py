@@ -1,5 +1,6 @@
 import os
 from pinecone import Pinecone
+from langfuse.decorators import observe
 from langchain_pinecone import Pinecone as PineconeDb, PineconeVectorStore
 
 class PineconeDB:
@@ -19,6 +20,7 @@ class PineconeDB:
     def get_index():
         return PineconeDB.get().Index(os.getenv("PINECONE_INDEX_NAME"))
 
+    @observe()
     def retrieve(input,embedder,uniq_id):
         # Get pinecone index.
         index = PineconeDB.get_index()

@@ -5,6 +5,7 @@ uvicorn
 PyPDF2
 pinecone
 transformers
+langfuse
 langchain
 langchain_openai
 langchain_pinecone
