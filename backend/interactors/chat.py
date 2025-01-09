@@ -5,6 +5,7 @@ from backend.service.google import LLM
 from backend.service.pinecone import PineconeDB
 from backend.utils.openai import Embedder as Openai_Embedder
 
+
 @observe()
 def call(question: str) -> str:
     # Get embedder.
@@ -13,7 +14,7 @@ def call(question: str) -> str:
     filename = os.getenv("KNOWLEDGE_FILE_NAME")
 
     # Get matching chunks from db.
-    matching_chunks = PineconeDB.retrieve(question, embedder, filename.split('.')[0])
+    matching_chunks = PineconeDB.retrieve(question, embedder, filename.split(".")[0])
 
     # Convert documents list to text.
     txt = String.document_to_str(matching_chunks)
@@ -30,4 +31,4 @@ def call(question: str) -> str:
 
     # Ask.
     ans = model.generate_content(prompt)
-    return  ans.text
+    return ans.text

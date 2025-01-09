@@ -3,17 +3,18 @@ from pinecone import Pinecone
 from langfuse.decorators import observe
 from langchain_pinecone import Pinecone as PineconeDb, PineconeVectorStore
 
+
 class PineconeDB:
     def get():
         return Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
 
-    def store(uniq_id, text_chunks, embeddings, file_name = ''):
+    def store(uniq_id, text_chunks, embeddings, file_name=""):
         PineconeDb.from_texts(
-            texts = text_chunks,
-            embedding = embeddings,
-            namespace = uniq_id,
-            metadatas = [{'id': f"Section {i+1}"} for i in range(len(text_chunks))],
-            index_name = os.getenv("PINECONE_INDEX_NAME")
+            texts=text_chunks,
+            embedding=embeddings,
+            namespace=uniq_id,
+            metadatas=[{"id": f"Section {i+1}"} for i in range(len(text_chunks))],
+            index_name=os.getenv("PINECONE_INDEX_NAME"),
         )
         return uniq_id
 
@@ -21,7 +22,7 @@ class PineconeDB:
         return PineconeDB.get().Index(os.getenv("PINECONE_INDEX_NAME"))
 
     @observe()
-    def retrieve(input,embedder,uniq_id):
+    def retrieve(input, embedder, uniq_id):
         # Get pinecone index.
         index = PineconeDB.get_index()
 
@@ -33,11 +34,10 @@ class PineconeDB:
         )
         retriever = vector_store.as_retriever(
             search_type="similarity_score_threshold",
-            search_kwargs={'score_threshold': 0.4}
+            search_kwargs={"score_threshold": 0.4},
         )
 
         # Retrieve matching chunks.
         matching_chunks = retriever.invoke(input)
 
         return matching_chunks
-    
